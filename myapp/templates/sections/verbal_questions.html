@@ -1,0 +1,14 @@
+
+
+{% for question in questions %}
+    <div class="question-container">
+        <h5>Question {{ forloop.counter }}:</h5>
+        <p>{{ question.question_text }}</p>
+        <div class="options">
+        <input type="radio" name="verbal_question_{{ question.id }}" value="A"> {{ question.option_a }}<br>
+        <input type="radio" name="verbal_question_{{ question.id }}" value="B"> {{ question.option_b }}<br>
+        <input type="radio" name="verbal_question_{{ question.id }}" value="C"> {{ question.option_c }}<br>
+        <input type="radio" name="verbal_question_{{ question.id }}" value="D"> {{ question.option_d }}<br>
+        </div>
+    </div>
+{% endfor %}

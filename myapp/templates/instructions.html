@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Instructions - Child Aptitude Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background-color: white;
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .instruction-list {
+            margin-bottom: 20px;
+        }
+
+        .instruction-item {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+
+        .instruction-number {
+            background-color: #3498db;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .instruction-text {
+            color: #34495e;
+        }
+
+        .important-note {
+            background-color: #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #fdcb6e;
+        }
+
+        .important-note h3 {
+            color: #d63031;
+            margin-bottom: 8px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exam Instructions</h1>
+        
+        <div class="instruction-list">
+            <div class="instruction-item">
+                <div class="instruction-number">1</div>
+                <div class="instruction-text">The exam consists of 6 sections with 10 questions each. Complete each section before moving to the next.</div>
+            </div>
+            
+            <div class="instruction-item">
+                <div class="instruction-number">2</div>
+                <div class="instruction-text">You have 60 minutes to complete all sections. A timer will be visible during the exam.</div>
+            </div>
+            
+            <div class="instruction-item">
+                <div class="instruction-number">3</div>
+                <div class="instruction-text">Answer each question to the best of your ability. There is no negative marking for wrong answers.</div>
+            </div>
+            
+            <div class="instruction-item">
+                <div class="instruction-number">4</div>
+                <div class="instruction-text">Do not refresh the page or navigate away during the exam, as your progress will be lost.</div>
+            </div>
+            
+            <div class="instruction-item">
+                <div class="instruction-number">5</div>
+                <div class="instruction-text">Your camera and microphone will be enabled throughout the test to maintain exam integrity.</div>
+            </div>
+            
+            <div class="instruction-item">
+                <div class="instruction-number">6</div>
+                <div class="instruction-text">If you face any technical issues, please contact our support team immediately.</div>
+            </div>
+            
+            <div class="instruction-item">
+                <div class="instruction-number">7</div>
+                <div class="instruction-text">The test automatically ends when the time is up or when you complete all sections.</div>
+            </div>
+        </div>
+        
+        <div class="important-note">
+            <h3>Important!</h3>
+            <p>This assessment is designed to identify your natural strengths and interests. There are no right or wrong aptitudes – this is not a measure of intelligence but a way to discover your unique talents.</p>
+        </div>
+        
+        <button class="btn" onclick="window.location.href='../camera_access/'">Next: Camera and Microphone Access</button>
+    </div>
+</body>
+</html>

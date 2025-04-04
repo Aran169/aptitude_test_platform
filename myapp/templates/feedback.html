@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Feedback - Child Aptitude Assessment</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      .container {
+        background-color: white;
+        width: 100%;
+        max-width: 600px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 25px;
+      }
+
+      p {
+        color: #34495e;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #34495e;
+        font-weight: bold;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #bdc3c7;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      textarea {
+        height: 120px;
+        resize: vertical;
+      }
+
+      .rating-group {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .rating-item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .stars {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+      }
+
+      .star {
+        font-size: 24px;
+        color: #bdc3c7;
+        cursor: pointer;
+      }
+
+      .star:hover,
+      .star.active {
+        color: #f39c12;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        margin-top: 20px;
+      }
+
+      .btn:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Feedback</h1>
+
+      <p>
+        Thank you for completing the Child Aptitude Assessment. Please take a
+        moment to share your experience with us.
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>How would you rate the overall assessment experience?</label>
+          <div class="stars" data-rating-name="overall_experience">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+            <input
+              type="hidden"
+              name="overall_experience"
+              id="overall_experience"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>How difficult did you find the questions?</label>
+          <select name="difficulty">
+            <option value="">Select an option</option>
+            <option value="very_easy">Very Easy</option>
+            <option value="easy">Easy</option>
+            <option value="moderate">Moderate</option>
+            <option value="difficult">Difficult</option>
+            <option value="very_difficult">Very Difficult</option>
+          </select>
+        </div>
+
+        <div class="rating-group">
+          <div class="rating-item">
+            <label>Clarity of instructions</label>
+            <div class="stars" data-rating-name="instructions_clarity">
+              <span class="star" data-value="1">★</span>
+              <span class="star" data-value="2">★</span>
+              <span class="star" data-value="3">★</span>
+              <span class="star" data-value="4">★</span>
+              <span class="star" data-value="5">★</span>
+              <input
+                type="hidden"
+                name="instructions_clarity"
+                id="instructions_clarity"
+              />
+            </div>
+          </div>
+
+          <div class="rating-item">
+            <label>Time provided</label>
+            <div class="stars" data-rating-name="time_provided">
+              <span class="star" data-value="1">★</span>
+              <span class="star" data-value="2">★</span>
+              <span class="star" data-value="3">★</span>
+              <span class="star" data-value="4">★</span>
+              <span class="star" data-value="5">★</span>
+              <input type="hidden" name="time_provided" id="time_provided" />
+            </div>
+          </div>
+
+          <div class="rating-item">
+            <label>Interface usability</label>
+            <div class="stars" data-rating-name="interface_usability">
+              <span class="star" data-value="1">★</span>
+              <span class="star" data-value="2">★</span>
+              <span class="star" data-value="3">★</span>
+              <span class="star" data-value="4">★</span>
+              <span class="star" data-value="5">★</span>
+              <input
+                type="hidden"
+                name="interface_usability"
+                id="interface_usability"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="favoriteSection"
+            >Which section did you enjoy the most?</label
+          >
+          <select id="favoriteSection" name="favoriteSection">
+            <option value="">Select an option</option>
+            <option value="logical">Logical Reasoning</option>
+            <option value="numerical">Numerical Ability</option>
+            <option value="verbal">Verbal Reasoning</option>
+            <option value="spatial">Spatial Ability</option>
+            <option value="memory">Memory & Retention</option>
+            <option value="creativity">Creativity & Interest</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="comments">Additional comments or suggestions</label>
+          <textarea
+            id="comments"
+            name="comments"
+            placeholder="Please share any feedback to help us improve..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn">Submit Feedback</button>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const starGroups = document.querySelectorAll(".stars");
+
+        starGroups.forEach((group) => {
+          const stars = group.querySelectorAll(".star");
+          const ratingInput = group.querySelector('input[type="hidden"]');
+          const ratingName = group.dataset.ratingName;
+
+          stars.forEach((star) => {
+            star.addEventListener("click", function () {
+              const value = parseInt(this.dataset.value);
+              ratingInput.value = value;
+
+              stars.forEach((s) => s.classList.remove("active"));
+              for (let i = 0; i < value; i++) {
+                stars[i].classList.add("active");
+              }
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

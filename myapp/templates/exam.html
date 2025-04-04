@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Child Aptitude Assessment</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+      }
+      .container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 30px;
+      }
+      .progress-tracker {
+        margin-bottom: 30px;
+      }
+      .section {
+        display: none; /* Initially hide all sections */
+      }
+      .active {
+        display: block; /* Show the current section */
+      }
+      .question-container {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+      }
+      .timer {
+        font-size: 18px;
+        font-weight: bold;
+        text-align: right;
+        margin-bottom: 20px;
+      }
+      .options label {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      .options label:hover {
+        background-color: #e9ecef;
+      }
+      .camera-box {
+        width: 320px;
+        height: 240px;
+        background-color: #e9ecef;
+        margin: 0 auto 20px;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .btn-primary {
+        background-color: #4e73df;
+        border-color: #4e73df;
+      }
+      .btn-primary:hover {
+        background-color: #2e59d9;
+        border-color: #2653d4;
+      }
+      .section-title {
+        background-color: #4e73df;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+      .webcam-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 150px;
+        height: 113px;
+        background-color: #e9ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Child Aptitude Assessment</h1>
+        <p>Discover your child's natural talents and interests</p>
+      </div>
+      <div>Current Section Name: {{ section_name }}</div>
+      <div class="timer" id="timer">Time Remaining: {{ time_remaining }}</div>
+
+      <form method="post">
+        {% csrf_token %}
+        <div id="section-{{ section_name }}" class="section active">
+          <div class="section-title">
+            <h2>{{ section_title }}</h2>
+            <p>{{ section_description }}</p>
+          </div>
+
+          {% if section_name == 'logical' %} 
+          {% include 'sections/logical_questions.html' %} 
+          {% elif section_name == 'numerical' %} 
+          {% include 'sections/numerical_questions.html' %} 
+          {% elif section_name == 'verbal' %} 
+          {% include 'sections/verbal_questions.html' %} 
+          {% elif section_name == 'spatial' %} 
+          {% include 'sections/spatial_questions.html' %} 
+          {% elif section_name == 'numerical1' %} 
+          {% include 'sections/numerical1_questions.html' %} 
+          {% elif section_name == 'reasoning' %} 
+          {% include 'sections/reasoning_questions.html' %} 
+          {% endif %}
+
+          <div class="d-flex justify-content-between">
+            {% if current_section_number > 1 %}
+            <button
+                type="submit"
+                class="btn btn-secondary"
+                name="previous_section"
+                value="true"
+            >
+                Previous Section
+            </button>
+            {% else %}
+            <div></div>
+            {% endif %}
+            {% if total_sections > current_section_number %}
+            <button
+                type="submit"
+                class="btn btn-primary"
+                name="next_section"
+                value="true"
+            >
+                Next Section
+            </button>
+            {% else %}
+            <button
+                type="submit"
+                class="btn btn-success"
+                formaction="{% url 'submit_assessment' %}"
+            >
+                Submit Assessment
+            </button>
+            {% endif %}
+        </div>
+        </div>
+      </form>
+
+      <div class="container">
+        <div
+            id="webcam-container"
+            class="webcam-container"
+            style="display: none"
+        >
+            <video id="webcam-video" autoplay playsinline></video>
+        </div>
+    </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentSectionId = "section-{{ section_name }}";
+        const currentSection = document.getElementById(currentSectionId);
+        if (currentSection) {
+          currentSection.style.display = "block";
+          currentSection.classList.add("active");
+        }
+      });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const timerDisplay = document.getElementById('timer');
+            let timeLeft = parseInt("{{ time_remaining_seconds }}", 10); 
+
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timerDisplay.textContent = `Time Remaining: ${formattedTime}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.querySelector('form').submit();
+                } else {
+                    timeLeft--;
+                }
+            }
+
+            updateTimer();
+
+            const timerInterval = setInterval(updateTimer, 1000);
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    const videoElement = document.getElementById('webcam-video');
+                    if (videoElement) {
+                        videoElement.srcObject = stream;
+                        document.getElementById('webcam-container').style.display = 'block'; // Show the container
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error accessing webcam:', error);
+                });
+        });
+    
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{% for question in questions %}
+    <div class="question-container">
+        <h5>Question {{ forloop.counter }}:</h5>
+        <p>{{ question.question_text }}</p>
+        {% if question.image %}
+            <img src="{{ question.image.url }}" alt="Question Image" style="max-width: 300px; height: auto; margin-bottom: 10px;">
+        {% endif %}
+        <div class="options">
+        <input type="radio" name="spatial_question_{{ question.id }}" value="A"> {{ question.option_a }}<br>
+        <input type="radio" name="spatial_question_{{ question.id }}" value="B"> {{ question.option_b }}<br>
+        <input type="radio" name="spatial_question_{{ question.id }}" value="C"> {{ question.option_c }}<br>
+        <input type="radio" name="spatial_question_{{ question.id }}" value="D"> {{ question.option_d }}<br>
+        </div>
+    </div>
+{% endfor %}

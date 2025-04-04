@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results - Child Aptitude Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f4f8;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .header-subtitle {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+        .student-info {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .student-info p {
+            margin-bottom: 5px;
+        }
+        .student-info strong {
+            color: #34495e;
+        }
+        .results-section {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .results-section h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .result-label {
+            color: #34495e;
+            font-weight: bold;
+        }
+        .result-value {
+            color: #7f8c8d;
+        }
+        .overall-score {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .overall-score h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+        .overall-percentage {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+        .btn-group {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+            background-color: #3498db;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Aptitude Assessment Results</h1>
+            <p class="header-subtitle">Concise summary of your child's performance</p>
+        </header>
+
+        {% if student %}
+        <div class="student-info">
+            <p><strong>Student Name:</strong> {{ student.full_name }}</p>
+            {% if student.age %}
+            <p><strong>Age:</strong> {{ student.age }} years</p>
+            {% endif %}
+            {% if student.grade %}
+            <p><strong>Grade:</strong> {{ student.grade }}</p>
+            {% endif %}
+        </div>
+
+        <div class="results-section">
+            <h2>Section Scores</h2>
+            <div class="result-item">
+                <span class="result-label">Logical Reasoning:</span>
+                <span class="result-value">{{ results.logical|default:0 }}%</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Numerical Ability:</span>
+                <span class="result-value">{{ results.numerical|default:0 }}%</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Numerical Ability 1:</span>
+                <span class="result-value">{{ results.numerical1|default:0 }}%</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Verbal Reasoning:</span>
+                <span class="result-value">{{ results.verbal|default:0 }}%</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Spatial Ability:</span>
+                <span class="result-value">{{ results.spatial|default:0 }}%</span>
+            </div>
+            <div class="result-item">
+                <span class="result-label">Reasoning:</span>
+                <span class="result-value">{{ results.reasoning|default:0 }}%</span>
+            </div>
+            </div>
+
+        <div class="overall-score">
+            <h2>Overall Percentage</h2>
+            {% if overall_average is not None %}
+            <p class="overall-percentage">{{ overall_average }}%</p>
+            {% else %}
+            <p class="overall-percentage">N/A</p>
+            {% endif %}
+        </div>
+
+        <div class="btn-group">
+            <a href="{% url 'home' %}" class="btn">Return Home</a>
+        </div>
+
+        {% else %}
+        <p>No student information found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
